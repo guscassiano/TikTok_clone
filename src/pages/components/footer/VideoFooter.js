@@ -2,16 +2,16 @@ import React from "react";
 import "./videoFooter.css";
 import AudiotrackIcon from '@mui/icons-material/Audiotrack';
 
-function VideoFooter() {
+function VideoFooter({name, description, music}) {
     return (
         <div className="videoFooter">
             <div className="videoFooter__text">
-                <h3>@guscassiano</h3>
-                <p>Descrição do Video</p>
+                <h3>@{name}</h3>
+                <p>{description}</p>
                 <div className="videoFooter__music">
                     <AudiotrackIcon className="vdeoFooter__icon"/>
                     <div className="videoFooterMusic__text">
-                        <p>Título da musica</p>
+                        <p>{music}</p>
                     </div>
                 </div>
             </div>
