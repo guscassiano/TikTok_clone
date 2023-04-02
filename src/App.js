@@ -1,14 +1,38 @@
+import React, {useEffect, useState} from "react";
 import "./App.css";
 import Video from "./pages/Video"
+import db from "./config/firebase"
+import {collection, getDocs } from 'firebase/firestore/lite';
 
 function App() {
+
+  const [video, setVideo] = useState([])
+
+  async function getVideos() {
+    const videosCollection = collection(db, "videos")
+    const videosSnapshot = await getDocs(videosCollection)
+    const videosList = videosSnapshot.docs.map(doc => doc.data())
+    setVideo(videosList)
+  }
+
+  useEffect( ()=> {
+    getVideos()
+  }, [])
   return (
     <div className="App">
       <div className="App__videos">
-        <Video likes={111} messages={222} shares={333} name="Paulo" description="Brecker o goleiro" music="Música épica" url="https://poqlymuephttfsljdabn.supabase.co/storage/v1/object/public/jornadadev/brecker2.mp4"/>
-        <Video likes={152} messages={278} shares={145} name="Pedro" description="Bird olhando para câmera" music="Clap Your Hands" url="https://poqlymuephttfsljdabn.supabase.co/storage/v1/object/public/jornadadev/bird.mp4"/>
-        <Video likes={258} messages={183} shares={253} name="Maria" description="Frajola pegando pulseira" music="Música orquestrada" url="https://poqlymuephttfsljdabn.supabase.co/storage/v1/object/public/jornadadev/brecker2.mp4"/>
-        <Video likes={84} messages={15} shares={20} name="Gustavo" description="Brecker o goleiro" music="Clap Your Hands" url="https://poqlymuephttfsljdabn.supabase.co/storage/v1/object/public/jornadadev/bird.mp4"/>
+        {video.map((item)=>{
+          return(
+            <Video 
+            likes={item.likes} 
+            messages={item.messages} 
+            shares={item.shares} 
+            name={item.name} 
+            description={item.description} 
+            music={item.music} 
+            url={item.url}/>
+          )
+        })}
       </div>
     </div>
   );
