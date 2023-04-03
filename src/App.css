@@ -37,3 +37,9 @@ html {
   display: none;
 }
 
+@media only screen and (max-width: 440px) {
+  .App__videos {
+    width: 100%;
+    height: 100vh;
+  }
+}
